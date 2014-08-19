@@ -546,7 +546,7 @@ class DatabaseOperations(object):
 
         if not ignore_constraints:
             # Add back FK constraints if needed
-            if field.rel and self.supports_foreign_keys:
+            if field.rel and field.db_constraint and self.supports_foreign_keys:
                 self.execute(
                     self.foreign_key_sql(
                         table_name,
@@ -721,7 +721,7 @@ class DatabaseOperations(object):
                     #else:
                     #    raise ValueError("Attempting to add a non null column that isn't character based without an explicit default value.")
 
-            if field.rel and self.supports_foreign_keys:
+            if field.rel and field.db_constraint and self.supports_foreign_keys:
                 self.add_deferred_sql(
                     self.foreign_key_sql(
                         table_name,
